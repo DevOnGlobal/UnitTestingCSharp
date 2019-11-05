@@ -15,11 +15,12 @@ namespace VotingAppTests
         {
             // Arrange
             var writer = new Mock<StreamWriter>("bla.txt");
+            var reader = new Mock<StreamReader>("bla.txt");
 
-            VoteService service = new VoteService(writer.Object);
+            VoteService service = new VoteService(writer.Object, reader.Object);
             Vote vote = new Vote { Choice = "No" };
 
-            var file = new Mock<File>();
+            // var file = new Mock<File>();
 
 
             // Act
