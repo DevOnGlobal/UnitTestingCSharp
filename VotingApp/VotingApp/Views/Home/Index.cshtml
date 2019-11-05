@@ -1,0 +1,28 @@
+﻿@using VotingApp.Models
+@model VotingApp.Models.VoteViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div>
+        <h2>Voting Results</h2>
+        <div>Yes: @Model.Yes</div>
+        <div>No: @Model.No</div>
+    </div>
+
+    <form asp-action="Vote">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <input class="form-control" type="radio" name="Choice" value="Yes"/>Yes
+            <input class="form-control" type="radio" name="Choice" value="No"/>No
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Vote" class="btn btn-default" />
+        </div>
+    </form>
+
+</div>
