@@ -40,7 +40,7 @@ namespace VotingApp
             // Helper services
             services.AddTransient<IRepository, FileRepository>((s) =>
             {
-                return new FileRepository("votes_remko");
+                return new FileRepository("VotingApp");
             });
             services.AddTransient<IVoteService, VoteService>();
         }
