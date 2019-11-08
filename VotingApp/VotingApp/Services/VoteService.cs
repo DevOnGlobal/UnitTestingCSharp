@@ -32,7 +32,8 @@ namespace VotingApp.Services
             var votes = new List<Vote>();
             foreach (var line in lines)
             {
-                votes.Add(new Vote { Choice = line });
+                var vote = new Vote { Choice = line };
+                votes.Add(vote);
             }
         
             return votes;
