@@ -20,7 +20,12 @@ namespace VotingApp.Services
 
         public void Add(Vote vote)
         {
-            // TODO: Add precondition e.g. validate vote.Choice input and throw exception if not met.
+            var validOptions = new List<string>() { "Yes", "No" };
+
+            if (!validOptions.Contains(vote.Choice))
+            {
+                throw new ArgumentException("Illegal vote casted.");
+            }    
 
             _repository.Write(vote.Choice);
         }
@@ -39,7 +44,7 @@ namespace VotingApp.Services
             return votes;
         }
 
-        public String GetWinner()
+        public string GetWinner()
         {
             var Winner = "";
             var votes = GetVotes();
@@ -56,9 +61,7 @@ namespace VotingApp.Services
 
         public void Reset()
         {
-            var writerStream = new FileStream(@"..\..\votes.txt", FileMode.Truncate);
-            var writer = new StreamWriter(writerStream, Encoding.ASCII);
-            writer.Flush();
+            _repository.Clear();
         }
     }
 }

@@ -9,39 +9,39 @@ namespace VotingApp.Services
 {
     public class FileRepository : IRepository
     {
-        private readonly StreamWriter _writer;
-        private readonly StreamReader _reader;
-        private readonly Encoding encoding = Encoding.ASCII;
+        private readonly string _filename;
 
         public FileRepository(string repositoryName)
         {
-            string filename = "..\\..\\" + repositoryName + ".txt";
-
-            var writerStream = new FileStream(filename, FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-            this._writer = new StreamWriter(writerStream, encoding);
-
-            var readerStream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            this._reader = new StreamReader(readerStream, encoding);
+            _filename = "..\\..\\" + repositoryName + ".txt";
         }
 
         public void Write(string data)
         {
-            _writer.WriteLine(data);
-            _writer.Flush();
+            CreateIfNotExists();
+            var lines = new List<string>() { data };
+            File.AppendAllLines(_filename, lines);
         }
 
         public List<string> Read()
         {
-            _reader.DiscardBufferedData();
-            _reader.BaseStream.Seek(0, SeekOrigin.Begin);
+            CreateIfNotExists();
+            return File.ReadAllLines(_filename).ToList();
+        }
 
-            List<string> lines = new List<string>();
-            while (!_reader.EndOfStream)
+        public void Clear()
+        {
+            CreateIfNotExists();
+            File.Delete(_filename);
+        }
+
+        private void CreateIfNotExists()
+        {
+            if (!File.Exists(_filename))
             {
-                lines.Add(_reader.ReadLine());
-            }
-
-            return lines;
+                var stream = File.Create(_filename);
+                stream.Dispose();
+            }                
         }
     }
 }

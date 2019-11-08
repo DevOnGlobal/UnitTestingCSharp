@@ -10,7 +10,7 @@ namespace VotingApp.Services
     {
         void Add(Vote vote);
         List<Vote> GetVotes();
-        String GetWinner();
+        string GetWinner();
         void Reset();
     }
 }

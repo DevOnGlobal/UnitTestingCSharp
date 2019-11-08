@@ -9,5 +9,6 @@ namespace VotingApp.Services
     {
         void Write(string data);
         List<string> Read();
+        void Clear();
     }
 }
