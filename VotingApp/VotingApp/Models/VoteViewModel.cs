@@ -9,5 +9,6 @@ namespace VotingApp.Models
     {
         public int Yes { get; set; }
         public int No { get; set; }
+        public String Winner { get; set; }
     }
 }

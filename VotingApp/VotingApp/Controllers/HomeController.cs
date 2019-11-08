@@ -25,7 +25,8 @@ namespace VotingApp.Controllers
             var viewModel = new VoteViewModel
             {
                 Yes = votes.Count(v => v.Choice == "Yes"),
-                No = votes.Count(v => v.Choice == "No")
+                No = votes.Count(v => v.Choice == "No"),
+                Winner = voteService.GetWinner()
             };
 
             return View(viewModel);
@@ -37,6 +38,17 @@ namespace VotingApp.Controllers
         {
             // Try to save vote
             voteService.Add(vote);
+
+            // Always redirect to Index
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Reset()
+        {
+            // Try to reset election
+            voteService.Reset();
 
             // Always redirect to Index
             return RedirectToAction(nameof(Index));
