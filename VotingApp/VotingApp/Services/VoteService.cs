@@ -11,34 +11,30 @@ namespace VotingApp.Services
 {
     public class VoteService : IVoteService
     {
-        private readonly StreamWriter writer;
-        private readonly StreamReader reader;
+        private readonly IRepository _repository;
 
-        public VoteService(StreamWriter writer, StreamReader reader)
+        public VoteService(IRepository repository)
         {
-            this.writer = writer;
-            this.reader = reader;
+            this._repository = repository;
         }
 
         public void Add(Vote vote)
         {
-            writer.WriteLine(vote.Choice);
-            writer.Flush();
+            // TODO: Add precondition e.g. validate vote.Choice input and throw exception if not met.
+
+            _repository.Write(vote.Choice);
         }
 
         public List<Vote> GetVotes()
         {
+            var lines = _repository.Read();
+
             var votes = new List<Vote>();
-
-            reader.DiscardBufferedData();
-            reader.BaseStream.Seek(0, SeekOrigin.Begin);
-
-            while (!reader.EndOfStream)
+            foreach (var line in lines)
             {
-                string choice = reader.ReadLine();
-                votes.Add(new Vote { Choice = choice });
+                votes.Add(new Vote { Choice = line });
             }
-
+        
             return votes;
         }
 

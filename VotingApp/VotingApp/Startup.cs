@@ -38,14 +38,11 @@ namespace VotingApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Helper services
-            services.AddSingleton<IVoteService, VoteService>((di) =>
+            services.AddTransient<IRepository, FileRepository>((s) =>
             {
-                var writerStream = new FileStream(@"..\..\votes.txt", FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-                var writer = new StreamWriter(writerStream, Encoding.ASCII);
-                var readerStream = new FileStream(@"..\..\votes.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                var reader = new StreamReader(readerStream, Encoding.ASCII);
-                return new VoteService(writer, reader);
+                return new FileRepository("votes_remko");
             });
+            services.AddTransient<IVoteService, VoteService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
