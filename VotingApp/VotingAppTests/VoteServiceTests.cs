@@ -28,24 +28,6 @@ namespace VotingAppTests
             repository.Verify(r => r.Write("Yes"), Times.Once);
         }
 
-        /*
-        [Fact]
-        public void VoteService_AddVote_Saves1Vote()
-        {
-            // Arrange
-            Mock<IRepository> repository = new Mock<IRepository>();
-            VoteService service = new VoteService(repository.Object);
-            Vote vote = new Vote { Choice = "No" };
-
-            //Act
-            service.Add(vote);
-            List<Vote> votes = service.GetVotes();
-
-            // Assert
-            _ = Assert.Single(votes);
-        }
-        */
-
         [Fact]
         public void GetVotes_OneVote_ReturnsOneVote()
         {
