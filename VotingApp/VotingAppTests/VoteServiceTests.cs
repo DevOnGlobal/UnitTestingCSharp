@@ -27,22 +27,5 @@ namespace VotingAppTests
             // Assert
             repository.Verify(r => r.Write("Yes"), Times.Once);
         }
-
-        [Fact]
-        public void GetVotes_OneVote_ReturnsOneVote()
-        {
-            // Arrange
-            Mock<IRepository> repository = new Mock<IRepository>();
-            VoteService service = new VoteService(repository.Object);
-            repository.Setup(
-                r => r.Read()).Returns(new List<string> { "Yes" });
-
-            //Act
-            List<Vote> votes = service.GetVotes();
-
-            // Assert
-            Assert.Single(votes);
-            Assert.Equal("Yes", votes.First().Choice);
-        }
     }
 }
